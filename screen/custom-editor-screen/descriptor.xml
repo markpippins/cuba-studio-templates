@@ -125,7 +125,7 @@ def printDatagrid(def entityName) {%>
         </vbox>
     <%}%>
 
-    <% if (detailStyle == 'Tabs') {%>
+    <%if (detailStyle == 'Tabs') {%>
         <vbox id="tablesBox">
             <tabSheet id="tabSheet">
                 <%collectionAttributesTablesXml.each{propertyName, tableXml ->
@@ -136,7 +136,7 @@ def printDatagrid(def entityName) {%>
         </vbox>
     <%}%>
 
-    <% if (detailStyle == 'Tables') {%>
+    <%if (detailStyle == 'Tables') {%>
         <vbox id="tablesBox" spacing="true">
             <%collectionAttributesTablesXml.each{propertyName, tableXml -> print("\n    $tableXml")}%>
         </vbox>
