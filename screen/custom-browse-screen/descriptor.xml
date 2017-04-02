@@ -1,0 +1,76 @@
+<%
+screenId = "${entity.name}.browse"
+controllerName = "${entity.className}Browse"
+
+def pluralForm = helper.pluralForm(entity.uncapitalizedClassName)
+tableId = "${pluralForm}Table"
+def tableDs = entity.uncapitalizedClassName.equals(pluralForm) ? pluralForm + "CollectionDs" : pluralForm + "Ds"
+def printActions() {
+    tableActions.each {action ->
+        def res = "\n                <action id='${action}'"
+        if (editorOpenType && editorOpenType != 'THIS_TAB' && (action == 'create' || action == 'edit')) {
+            res += " openType='${editorOpenType}'"
+        }
+        res += '/>'
+        print res
+    }
+}
+
+def printButtons() {
+    tableActions.each { action ->
+        print "\n                <button id='${action}Btn' action='${tableId}.${action}'/>"
+    }
+}
+
+def printColumns() {
+    def browseColumns = helper.getBrowseColumns(entity, entityView)
+    browseColumns.each { column ->
+        print "\n                <column id='${column}'/>"
+    }
+}
+%><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="${xmlNamespace_window}"
+        caption="msg://browseCaption"
+        class="${packageName}.${controllerName}"
+        focusComponent="${tableId}"
+        lookupComponent="${tableId}"
+        messagesPack="${packageName}">
+    <dsContext>
+        <${entityTableType.dsName} id="${tableDs}"
+                              class="${entity.fqn}"<%(entityTableType.dsName == 'hierarchicalDatasource') ? print("\nhierarchyProperty='${tableType_hierarchicalProperty}'") : print("") %>
+                              view="${entityView.name}">
+            <query>
+                <![CDATA[select e from ${entity.name} e]]>
+            </query>
+        </${entityTableType.dsName}>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="${tableId}"
+            spacing="true"><%if (createFilter) {%>
+        <filter id="filter"
+                applyTo="${tableId}"
+                datasource="${tableDs}">
+            <properties include=".*"/>
+        </filter><%}%>
+        <${entityTableType.xmlName} id="${tableId}"
+               width="100%"
+               <%if (multiselect) {%>multiselect="true"<%}%>
+               <%if (presentation) {%>presentations="true"<%}%>>
+            <actions><% printActions() %>
+            </actions>
+            <columns><% printColumns() %>
+            </columns>
+            <rows datasource="${tableDs}"/>
+            <rowsCount/>
+        </${entityTableType.xmlName}>
+        <buttonsPanel id="buttonsPanel"
+                      align="BOTTOM_LEFT"
+                      alwaysVisible="true"
+                      width="100%">
+            <hbox spacing="true" width="AUTO">
+                <% printButtons() %>
+            </hbox>
+        </buttonsPanel>
+    </layout>                
+</window>

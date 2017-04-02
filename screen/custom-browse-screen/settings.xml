@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<template icon="TEMPLATE_BROWSE"
+          name="Custom Entity browser">
+    <description>
+        <![CDATA[Standard browse and lookup screen with a filter on top and a table consuming all available space.]]>
+    </description>
+    <locMessages key="browseCaption">
+        <message lang="default">
+            <![CDATA[${entity.className} browser]]>
+        </message>
+    </locMessages>
+    <property caption="Entity"
+              code="entity"
+              propertyType="ENTITY"
+              required="true"/>
+    <property caption="Entity view"
+              code="entityView"
+              propertyType="VIEW"
+              relatedProperty="entity"
+              required="true"/>
+    <property caption="Table Type"
+              code="entityTableType"
+              propertyType="TABLE_TYPE"
+              relatedProperty="entity"
+              required="true"/>
+    <property caption="Menu Item"
+              code="menuItem"
+              propertyType="MENU_ITEM"/>
+    <property advanced="true"
+              caption="Table actions"
+              code="tableActions"
+              defaultValue="create,edit,remove"
+              propertyType="MULTI_OPTION">
+        <option id="create"/>
+        <option id="edit"/>
+        <option id="remove"/>
+        <option id="refresh"/>
+        <option id="add"/>
+        <option id="exclude"/>
+        <option id="excel"/>
+    </property>
+    <property advanced="true"
+              caption="Editor opent type"
+              code="editorOpenType"
+              propertyType="OPTION">
+        <option id="NEW_TAB"/>
+        <option id="THIS_TAB"/>
+        <option id="DIALOG"/>
+    </property>
+    <property advanced="true"
+              caption="Create filter"
+              code="createFilter"
+              defaultValue="true"
+              propertyType="BOOLEAN"/>
+    <property advanced="true"
+              caption="Multiselect"
+              code="multiselect"
+              propertyType="BOOLEAN"/>
+    <property advanced="true"
+              caption="Presentation"
+              code="presentation"
+              propertyType="BOOLEAN"/>
+    <source fileExt="xml"
+            name="descriptor"
+            templateFileName="${helper.generateDescriptorFileName(entity)}-browse"/>
+    <source fileExt="java"
+            name="controller"
+            templateFileName="${controllerName}"/>
+    <source fileExt="groovy"
+            name="controller"
+            templateFileName="${controllerName}"/>
+</template>
