@@ -1,1 +1,1 @@
-git add screen/*/*.groovy
+git add screen/*/*.xml
