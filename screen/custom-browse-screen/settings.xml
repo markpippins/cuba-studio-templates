@@ -9,6 +9,11 @@
             <![CDATA[${entity.className} browser]]>
         </message>
     </locMessages>
+    <property advanced="true"
+              caption="Controller  Base  Class"
+              code="controllerBaseClass"
+              defaultValue="com.haulmont.cuba.gui.components.AbstractLookup"
+              propertyType="STRING"/>
     <property caption="Entity"
               code="entity"
               propertyType="ENTITY"
